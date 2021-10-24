@@ -2,6 +2,7 @@ package com.example.evernote;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
@@ -13,10 +14,11 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.example.evernote.userentity.Account;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity  implements SignupTabFragment.SendMessage{
 
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -46,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         LoginAdapter adapter = new LoginAdapter(getSupportFragmentManager(),this,tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -54,7 +57,6 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
 
             @Override
@@ -63,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
+        //Animation
         google.setTranslationY(300);
         apple.setTranslationY(300);
         tabLayout.setTranslationY(300);
@@ -72,11 +74,19 @@ public class LoginActivity extends AppCompatActivity {
         apple.setAlpha(vel);
         tabLayout.setAlpha(vel);
 
-        google.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
-        apple.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(600).start();
-        tabLayout.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(100).start();
+        google.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(300).start();
+        apple.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(300).start();
+        tabLayout.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(300).start();
 
 
 
+    }
+
+    @Override
+    public void sendData(Account message) {
+        String tag = "android:switcher:" + R.id.view_pager + ":" + 0;
+        LoginTabFragment f = (LoginTabFragment) getSupportFragmentManager().findFragmentByTag(tag);
+        f.DisplayData(message);
+        viewPager.setCurrentItem(0);
     }
 }

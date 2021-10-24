@@ -18,21 +18,22 @@ import com.example.evernote.userentity.Account;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
-public class LoginActivity extends AppCompatActivity  implements SignupTabFragment.SendMessage{
+public class LoginActivity extends AppCompatActivity implements SignupTabFragment.SendMessage {
 
     TabLayout tabLayout;
     ViewPager viewPager;
-    FloatingActionButton google,apple;
+    FloatingActionButton google, apple;
 
     float vel = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getSupportActionBar().hide();
-       this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-       //this.getWindow().getAttributes().layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //this.getWindow().getAttributes().layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
 
         setContentView(R.layout.activity_login);
 
@@ -45,7 +46,7 @@ public class LoginActivity extends AppCompatActivity  implements SignupTabFragme
         tabLayout.addTab(tabLayout.newTab().setText("Sign Up"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        LoginAdapter adapter = new LoginAdapter(getSupportFragmentManager(),this,tabLayout.getTabCount());
+        LoginAdapter adapter = new LoginAdapter(getSupportFragmentManager(), this, tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
@@ -77,7 +78,6 @@ public class LoginActivity extends AppCompatActivity  implements SignupTabFragme
         google.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(300).start();
         apple.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(300).start();
         tabLayout.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(300).start();
-
 
 
     }

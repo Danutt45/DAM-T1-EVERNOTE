@@ -37,16 +37,12 @@ public class SignupTabFragment extends Fragment {
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!(isEmailValid(email.getText().toString())))
-                    Toast.makeText(getContext(), "Emailul nu este valid", Toast.LENGTH_SHORT).show();
-                if (password.getText().toString().isEmpty())
-                    Toast.makeText(getContext(), "Parola nu este valid", Toast.LENGTH_SHORT).show();
-                if (comfirm_password.getText().toString().isEmpty() && password.getText().toString().compareTo(password.getText().toString()) == 0)
-                    Toast.makeText(getContext(), "Parola nu se potriveste", Toast.LENGTH_SHORT).show();
 
-                _account = new Account(1, email.getText().toString(), password.getText().toString());
+                if (validation() == true) {
+                    _account = new Account(1, email.getText().toString(), password.getText().toString());
 
-                SM.sendData(_account);
+                    SM.sendData(_account);
+                }
             }
         });
 
@@ -61,10 +57,26 @@ public class SignupTabFragment extends Fragment {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
+    boolean validation() {
+        if (!(isEmailValid(email.getText().toString()))) {
+            Toast.makeText(getContext(), "Emailul nu este valid", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (password.getText().toString().isEmpty()) {
+            Toast.makeText(getContext(), "Parola nu este valid", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (comfirm_password.getText().toString().isEmpty() && password.getText().toString().compareTo(password.getText().toString()) == 0) {
+            Toast.makeText(getContext(), "Parola nu se potriveste", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
 
     interface SendMessage {
         void sendData(Account message);
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

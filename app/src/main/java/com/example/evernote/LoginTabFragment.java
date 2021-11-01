@@ -30,6 +30,15 @@ public class LoginTabFragment extends Fragment{
         email = root.findViewById(R.id.email);
         password = root.findViewById(R.id.password);
         login = root.findViewById(R.id.btnlogin);
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return root;
     }
 

@@ -7,7 +7,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.evernote.JSON.IResponse;
+import com.example.evernote.JSON.JSONReader;
 import com.example.evernote.notes.MenuAdaptor;
 import com.example.evernote.notes.Note;
 import com.example.evernote.userentity.Account;
@@ -39,6 +42,42 @@ public class HomeActivity extends AppCompatActivity {
         menuAdaptor = new MenuAdaptor(getNote());
         listview.setAdapter(menuAdaptor);
 
+        JSONReader reader = new JSONReader();
+        Thread th = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                reader.read("https://jsonkeeper.com/b/FT8F", new IResponse() {
+                    @Override
+                    public void onSucces(List<Note> _obj) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                List<Note> _obj2 = getNote();
+                                for(Note l : _obj )
+                                    _obj2.add(l);
+
+                                menuAdaptor = new MenuAdaptor(_obj2);
+                                listview.setAdapter(menuAdaptor);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onError(String _error) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(HomeActivity.this,_error,Toast.LENGTH_SHORT);
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+    th.start();
+
+
     }
 
 
@@ -48,13 +87,7 @@ public class HomeActivity extends AppCompatActivity {
         lst.add(new Note("Note 2", "Exemplu 1"));
         lst.add(new Note("Note 3", "Exemplu 2"));
         lst.add(new Note("Note 4", "Exemplu 3"));
-        lst.add(new Note("Note 5", "Exemplu 4"));
-        lst.add(new Note("Note 6", "Exemplu 5"));
-        lst.add(new Note("Note 7", "Exemplu 6"));
-        lst.add(new Note("Note 8", "Exemplu 7"));
-        lst.add(new Note("Note 9", "Exemplu 8"));
-        lst.add(new Note("Note 10", "Exemplu 9"));
-        lst.add(new Note("Note 11", "Exemplu 10"));
+
         return lst;
     }
 }

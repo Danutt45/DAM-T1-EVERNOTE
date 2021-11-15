@@ -1,6 +1,8 @@
 package com.example.evernote.notes;
 
-public class Note {
+import java.util.List;
+
+public class Note{
     private String titlu;
     private String descriere;
 

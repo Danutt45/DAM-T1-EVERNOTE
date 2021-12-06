@@ -24,33 +24,33 @@
         android:id="@+id/tw_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Good evening, @name"
-        android:textSize="28sp"
+        android:text="@string/HomeMainMessage"
         android:textColor="@color/white"
+        android:textSize="28sp"
         android:textStyle="bold"
 
-        app:layout_constraintVertical_bias="0.75"
-        app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintBottom_toBottomOf="@+id/entry_background"
         app:layout_constraintEnd_toEndOf="@+id/entry_background"
+        app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="@+id/entry_background"
-        app:layout_constraintTop_toTopOf="@+id/entry_background" />
+        app:layout_constraintTop_toTopOf="@+id/entry_background"
+        app:layout_constraintVertical_bias="0.75" />
 
     <TextView
         android:id="@+id/tw_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Monday,November 1, 2021"
-        android:textSize="15sp"
+        android:text="@string/day"
         android:textColor="@color/white"
+        android:textSize="15sp"
         android:textStyle="bold"
 
-        app:layout_constraintVertical_bias="0.88"
-        app:layout_constraintHorizontal_bias="0.09"
         app:layout_constraintBottom_toBottomOf="@+id/entry_background"
         app:layout_constraintEnd_toEndOf="@+id/entry_background"
+        app:layout_constraintHorizontal_bias="0.09"
         app:layout_constraintStart_toStartOf="@+id/entry_background"
-        app:layout_constraintTop_toTopOf="@+id/entry_background" />
+        app:layout_constraintTop_toTopOf="@+id/entry_background"
+        app:layout_constraintVertical_bias="0.88" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id = "@+id/constraint_Layout"

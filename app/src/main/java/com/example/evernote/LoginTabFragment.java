@@ -16,13 +16,16 @@ import androidx.fragment.app.Fragment;
 
 import com.example.evernote.userentity.Account;
 
-public class LoginTabFragment extends Fragment{
+import java.io.Serializable;
+
+public class LoginTabFragment extends Fragment {
     EditText email;
     EditText password;
     Account ac;
 
     Button login;
 
+    final int acc_validation = 1;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.login_tab_fragment, container, false);
@@ -34,8 +37,13 @@ public class LoginTabFragment extends Fragment{
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),HomeActivity.class);
-                startActivity(intent);
+                if (ac != null) {
+                    Intent intent = new Intent(getActivity(), HomeActivity.class);
+                    intent.putExtra("AccountData",ac);
+                    startActivity(intent);
+                }
+                else
+                    Toast.makeText(getContext(), "Va rog sa va inregistrati", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -43,10 +51,10 @@ public class LoginTabFragment extends Fragment{
     }
 
 
-
-    void DisplayData(Account mesage){
-        ac = new Account(mesage.getId(),mesage.getMail(),mesage.getPassword());
+    void DisplayData(Account mesage) {
+        ac = new Account(mesage.getId(), mesage.getMail(), mesage.getPassword());
         email.setText(ac.getMail());
         password.setText(ac.getPassword());
     }
+
 }

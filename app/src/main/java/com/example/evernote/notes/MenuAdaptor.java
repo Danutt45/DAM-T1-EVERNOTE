@@ -14,8 +14,14 @@ public class MenuAdaptor extends BaseAdapter {
 
     List<Note> note;
 
+
+
     public MenuAdaptor(List<Note> note) {
         this.note = note;
+    }
+
+    public List<Note> getNote() {
+        return note;
     }
 
     @Override

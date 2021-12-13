@@ -18,6 +18,11 @@ import com.example.evernote.database.NoteDAO;
 import com.example.evernote.notes.MenuAdaptor;
 import com.example.evernote.notes.Note;
 import com.example.evernote.userentity.Account;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -102,9 +107,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         th.start();
-
-
-
     }
 
     public void InsertDB(){
@@ -119,6 +121,10 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         thread.start();
+        writeToDataBase();
+        readFromDataBase();
+
+
     }
 
 //TRB FACUTE un SYNC intre cele 2 threaduri !
@@ -184,6 +190,36 @@ public class HomeActivity extends AppCompatActivity {
         String[] _newName = name.split("@");
         _newName[0] = _newName[0].substring(0,1).toUpperCase() + _newName[0].substring(1).toLowerCase();
         return _newName[0];
+    }
+
+    private void writeToDataBase(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = database.getReference("Note");
+
+        int nr_elem = listview.getAdapter().getCount();
+        for(int i = 0 ; i< nr_elem ; i++) {
+            Note note = (Note)listview.getAdapter().getItem(i);
+            databaseReference.child(note.getTitlu()).setValue(note.getDescriere());
+        }
+    }
+
+    private void readFromDataBase(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = database.getReference("Note");
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                String value = ds.getValue(String.class);
+                Log.d("Firebase", ds.getKey() + ":" + value);
+            }}
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w("Firebase", "Failed to read value.", error.toException());
+            }
+        });
     }
 
 }
